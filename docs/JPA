@@ -1,0 +1,34 @@
+Java Persistance api - specification that lets you do ORM.
+you map the entity classes into sql tables
+
+tell jpa that the model is the 'thing' we need to save to the db.
+so we add the annotations in the model class
+(map obj of that class to the relational db)
+(each one of my member variables will be columns, each instance of the model class will be a row)
+
+
+
+create a table called TopicModel, that has 3 columns (id, name, description):
+( @Id means that is the primary key )
+
+@Entity
+public class TopicModel {
+    @Id
+    private String id;
+    private String name;
+    private String description;
+
+for the data, jpa automatically provides the class, all you need is to create an interface:
+( you get the most common methods out of the box. crud..)
+//the id in our model class is a String, therefore <.. , String>
+public interface TopicRepository extends CrudRepository<TopicModel, String> {
+
+}
+
+
+then, you inject the TopicRepository into your service
+so you can use the methods from the interface impl:
+
+    //inject an instance of the TR:
+    @Autowired
+    private TopicRepository topicRepository;
